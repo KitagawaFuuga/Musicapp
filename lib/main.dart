@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'music.dart';
+import 'choice.dart';
+import 'select.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AudioPlayerPage(),
+      home: Choice(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'select.dart';
 
 class Choice extends StatefulWidget{
   const Choice({Key? key}) : super(key: key);
@@ -8,6 +9,15 @@ class Choice extends StatefulWidget{
 }
 
 class _ChoiceState extends State<Choice> {
+
+  @override
+  void initState() {
+    flagnum = [0,0,0,0,0,0,0,0,0,0];
+    flags = [false,false,false,false,false,false,false,false,false,false];
+  }
+
+  var flagnum = [0,0,0,0,0,0,0,0,0,0];
+  List<bool> flags = [false,false,false,false,false,false,false,false,false,false];
   @override
   Widget build(BuildContext context) {
   final double deviceSize = MediaQuery.of(context).size.height;
@@ -19,9 +29,9 @@ class _ChoiceState extends State<Choice> {
               child: Container(
                 margin: EdgeInsets.only(top: deviceSize / 5),
                 child: const Text(
-                  'Choice',
+                  '今の気分は??',
                   style: TextStyle(
-                    fontSize: 60,
+                    fontSize: 50,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -32,36 +42,9 @@ class _ChoiceState extends State<Choice> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('あ')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('い')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('う')
-                  ),
+                  ButtonPrint('心地よい', 0, deviceSize),
+                  ButtonPrint('楽しく', 1, deviceSize),
+                  ButtonPrint('にぎやかな', 2, deviceSize)
                 ],
               ),
             ),
@@ -70,36 +53,9 @@ class _ChoiceState extends State<Choice> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('え')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('お')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('か')
-                  ),
+                  ButtonPrint('感動する', 3,deviceSize),
+                  ButtonPrint('静かな', 4,deviceSize),
+                  ButtonPrint('勢いのある', 5,deviceSize)
                 ],
               ),
             ),
@@ -108,36 +64,9 @@ class _ChoiceState extends State<Choice> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('き')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('く')
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(125, 50),
-                      elevation: 10,
-                    ),
-                    onPressed: (){
-                      print("button press !!");
-                    },
-                    child: Text('け')
-                  ),
+                  ButtonPrint('おしゃれに', 6,deviceSize),
+                  ButtonPrint('気分よく', 7,deviceSize),
+                  ButtonPrint('ららんらんらん', 8,deviceSize)
                 ],
               ),
             ),
@@ -149,7 +78,10 @@ class _ChoiceState extends State<Choice> {
                   elevation: 10,
                 ),
                 onPressed: (){
-                  print("button press !!");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => select(nums: flagnum))
+                  );
                 },
                 child: const Text('音楽ページへ')
               ),
@@ -158,5 +90,25 @@ class _ChoiceState extends State<Choice> {
         ),
       ),
     );
+  }
+
+  Widget ButtonPrint(String TextString, int num, double size){
+
+    return Container(
+      width: size / 7,
+      height: size / 20,
+      child: ElevatedButton(
+        onPressed: (){
+          setState(() {
+            flags[num] = !flags[num];
+            flags[num] ?  flagnum[num] = 1 : flagnum[num] = 0;
+            print(flagnum[num].toString());
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          primary: flags[num] ? Colors.black : Colors.blue
+        ),
+        child: Text(TextString),
+    ));
   }
 }
